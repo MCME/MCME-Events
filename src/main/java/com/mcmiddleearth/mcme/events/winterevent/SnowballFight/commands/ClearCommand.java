@@ -39,7 +39,7 @@ public class ClearCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        if (player.hasPermission("winterevent.clear")) {
+        if (player.hasPermission("winterevent.staff")) {
             int filesDeleted = PlayerStatsContainer.wipeAll();
             player.sendMessage(ChatColor.DARK_AQUA + "Deleting " + filesDeleted + " files");
             return true;

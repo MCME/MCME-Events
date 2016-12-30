@@ -72,7 +72,7 @@ public class LeaderBoardUtil {
             } else if (playerStat.getThrown() == entry.getKey()) {
                 out.append(ChatColor.GOLD + "" + current + ChatColor.GRAY + ". " + ChatColor.AQUA + entry.getValue().getPlayerName() + ChatColor.GRAY + ": " + ChatColor.GREEN + entry.getValue().getThrown() + "\n");
             } else if (playerStat.getHitSelf() == entry.getKey()) {
-                out.append(ChatColor.GOLD + "" + current + ChatColor.GRAY + ". " + ChatColor.AQUA + entry.getValue().getPlayerName() + ChatColor.GRAY + ": " + ChatColor.GREEN + entry.getValue().getHitOthers() + "\n");
+                out.append(ChatColor.GOLD + "" + current + ChatColor.GRAY + ". " + ChatColor.AQUA + entry.getValue().getPlayerName() + ChatColor.GRAY + ": " + ChatColor.GREEN + entry.getValue().getHitSelf() + "\n");
             }
             current += 1;
         }
