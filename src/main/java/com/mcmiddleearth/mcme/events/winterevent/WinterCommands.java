@@ -18,11 +18,10 @@
  */
 package com.mcmiddleearth.mcme.events.winterevent;
 
-import com.mcmiddleearth.mcme.events.winterevent.SnowManInvasion.Commands.InvasionCommands;
 import com.mcmiddleearth.mcme.events.winterevent.SnowballFight.commands.ClearCommand;
 import com.mcmiddleearth.mcme.events.winterevent.SnowballFight.commands.GetCommand;
-import com.mcmiddleearth.mcme.events.winterevent.HorseRace.MountCommand;
 import com.mcmiddleearth.mcme.events.winterevent.SnowballFight.commands.SnowCommand;
+import com.mcmiddleearth.mcme.events.winterevent.SnowballFight.commands.StartStopCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -42,13 +41,14 @@ public class WinterCommands implements CommandExecutor{
                 return new SnowCommand().onCommand(cs, cmnd, label, args);
             }else if(args[0].equalsIgnoreCase("getsnow")){
                 return new GetCommand().onCommand(cs, cmnd, label, args);
-            }else if(args[0].equalsIgnoreCase("mount")){
-                return new MountCommand().onCommand(cs, cmnd, label, args);
+            }else if(args[0].equalsIgnoreCase("start")){
+                return new StartStopCommand().onCommand(cs, cmnd, label, args);
+            }else if(args[0].equalsIgnoreCase("stop")){
+                return new StartStopCommand().onCommand(cs, cmnd, label, args);
             }else if(args[0].equalsIgnoreCase("clear")){
                 return new ClearCommand().onCommand(cs, cmnd, label, args);
-            }else if(args[0].equalsIgnoreCase("invade")){
-                return new InvasionCommands().onCommand(cs, cmnd, label, args);
             }else{
+                cs.sendMessage("Invalid subcommand");
                 return false;
             }
         }

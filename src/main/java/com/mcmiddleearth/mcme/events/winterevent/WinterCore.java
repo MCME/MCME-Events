@@ -24,4 +24,5 @@ package com.mcmiddleearth.mcme.events.winterevent;
  */
 public class WinterCore {
     
+    public static boolean active=false;
 }

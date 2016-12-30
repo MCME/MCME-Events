@@ -25,6 +25,9 @@ package com.mcmiddleearth.mcme.events.winterevent.SnowballFight.listeners;
 
 import com.mcmiddleearth.mcme.events.winterevent.SnowballFight.stats.PlayerStats;
 import com.mcmiddleearth.mcme.events.winterevent.SnowballFight.stats.PlayerStatsContainer;
+import com.mcmiddleearth.mcme.events.winterevent.WinterCore;
+import java.util.logging.Logger;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -36,6 +39,9 @@ public class SnowballListener implements Listener{
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
+        if(!WinterCore.active) {
+            return;
+        }
         if (!(event.getEntity() instanceof Player)) {
             return;
         }
@@ -58,12 +64,16 @@ public class SnowballListener implements Listener{
 
     @EventHandler
     public void onThrow(ProjectileLaunchEvent event) {
+        if(!WinterCore.active) {
+            return;
+        }
         if (!(event.getEntity() instanceof Snowball)) {
             return;
         }
         if (!(event.getEntity().getShooter() instanceof Player)) {
             return;
         }
+        ((Player)event.getEntity().getShooter()).setGameMode(GameMode.SURVIVAL);
         PlayerStats thrower = PlayerStatsContainer.getForPlayer((Player) event.getEntity().getShooter());
         thrower.incrementThrown();
     }

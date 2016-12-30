@@ -23,6 +23,7 @@
  */
 package com.mcmiddleearth.mcme.events.winterevent.SnowballFight.commands;
 
+import com.mcmiddleearth.mcme.events.winterevent.WinterCore;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,12 +35,24 @@ import org.bukkit.inventory.ItemStack;
 public class GetCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if(!WinterCore.active) {
+            return true;
+        }
         if (!(sender instanceof Player)) {
             sender.sendMessage("You must be a player to run this command.");
             return true;
         }
         Player player = (Player) sender;
-        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, -1));
+        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
+        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
+        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
+        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
+        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
+        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
+        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
+        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
+        player.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
+        player.sendMessage("Snowballs!");
         player.updateInventory();
         return true;
     }

@@ -1,7 +1,7 @@
 /**
  * * This file is part of winterEvent, licensed under the MIT License (MIT).
  *
- * This part was mostly created by SugarKoala. o:  ##bullshit
+ * Copyright (c) 2014 Henry Slawniak <http://mcme.co/> and Created by SugarKoala. sort of.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,35 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package com.mcmiddleearth.mcme.events.winterevent.SnowballFight.commands;
 
-package com.mcmiddleearth.mcme.events.winterevent.HorseRace;
-
-import org.bukkit.Material;
+import com.mcmiddleearth.mcme.events.winterevent.WinterCore;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-public class MountCommand implements CommandExecutor{
+public class StartStopCommand implements CommandExecutor {
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) {
-        Player player = (Player) sender;
-        if (player.hasPermission("winterevent.mount")) {
-            if (player.isInsideVehicle()) {
-                player.sendMessage("You are already on a horse!");
-                return true;
-            } else {
-                Horse h = player.getWorld().spawn(player.getLocation(), Horse.class);
-                h.setTamed(true);
-                h.getInventory().setSaddle(new ItemStack(Material.SADDLE));
-                h.setPassenger(player);
-            }
-                return true;
-            }
+            sender.sendMessage("You must be a player to run this command.");
+            return true;
         }
-        return false;
+        Player player = (Player) sender;
+        if (player.hasPermission("winterevent.staff")) {
+            if(args[0].equalsIgnoreCase("start")) {
+                WinterCore.active=true;
+                Bukkit.getServer().broadcastMessage(ChatColor.GOLD+"[Snowball Fight]"+ChatColor.WHITE+" START!!! Let the fight begin.");
+                return true;
+            } else if(args[0].equalsIgnoreCase("stop")) {
+                WinterCore.active=false;
+                Bukkit.getServer().broadcastMessage(ChatColor.GOLD+"[Snowball Fight]"+ChatColor.WHITE+" STOP!!! Snowball fight ended.");
+                return true;
+            }
+            return false;
+        } else {
+            player.sendMessage(ChatColor.RED + "You don't have permission to do that.");
+            return true;
+        }
     }
 }

@@ -38,11 +38,11 @@ public class SnowCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
-        if (args.length < 1) {
+        if (args.length < 2) {
             LeaderBoardUtil.showLeaderboard(player);
             return true;
-        } else if (args.length == 1) {
-            LeaderBoardUtil.showLeaderboard(player, args[0]);
+        } else if (args.length == 2) {
+            LeaderBoardUtil.showLeaderboard(player, args[1]);
             return true;
         }
         return false;
