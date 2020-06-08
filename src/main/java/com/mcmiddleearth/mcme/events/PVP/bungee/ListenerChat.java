@@ -19,7 +19,6 @@ package com.mcmiddleearth.mcme.events.PVP.bungee;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import com.mcmiddleearth.mcme.events.PVP.PVPCommandCore;
-import java.io.EOFException;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -28,23 +27,21 @@ import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import net.md_5.bungee.api.connection.Connection;
+import net.md_5.bungee.event.EventPriority;
 
 /**
  * @author Fraspace5
  */
 public class ListenerChat implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void chatMessage(ChatEvent event) throws IOException {
         String[] message = event.getMessage().split(" ");
         if (event.getSender() instanceof ProxiedPlayer && message[0].equalsIgnoreCase("/pvp")) {
@@ -69,7 +66,7 @@ public class ListenerChat implements Listener {
                     pl.sendMessage(new ComponentBuilder("From now you will be informed about new pvp games ").color(ChatColor.AQUA).create());
                     PVPBungee.getData().put(pl.getUniqueId(), new ArrayList<String>());
                 }
-
+                event.setCancelled(true);
             } else if (message.length == 2 && (message[1].equalsIgnoreCase("unsubscribe") || message[1].equalsIgnoreCase("unsub"))) {
 
                 if (!PVPBungee.getData().containsKey(pl.getUniqueId())) {
@@ -79,6 +76,7 @@ public class ListenerChat implements Listener {
                 } else {
                     pl.sendMessage(new ComponentBuilder("You have already unsubscribed ").color(ChatColor.RED).create());
                 }
+                event.setCancelled(true);
 
             } else if (message.length == 2 && (message[1].equalsIgnoreCase("subscribe") || message[1].equalsIgnoreCase("sub"))) {
                 if (PVPBungee.getData().containsKey(pl.getUniqueId())) {
@@ -89,6 +87,7 @@ public class ListenerChat implements Listener {
                     pl.sendMessage(new ComponentBuilder("You have already subscribed ").color(ChatColor.RED).create());
 
                 }
+                event.setCancelled(true);
 
             }
 
@@ -96,7 +95,7 @@ public class ListenerChat implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onMessageSent(PluginMessageEvent event) {
 
         if (event.getReceiver() instanceof ProxiedPlayer) {
